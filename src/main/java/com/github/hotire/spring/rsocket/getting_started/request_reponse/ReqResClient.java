@@ -19,7 +19,7 @@ public class ReqResClient {
                                     .block();
     }
 
-    public Mono<String> callBlocking(String string) {
+    public Mono<String> call(String string) {
         return socket
                 .requestResponse(DefaultPayload.create(string))
                 .map(Payload::getDataUtf8);

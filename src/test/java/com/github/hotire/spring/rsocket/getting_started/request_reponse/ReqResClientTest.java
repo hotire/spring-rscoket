@@ -17,7 +17,7 @@ class ReqResClientTest {
         final ReqResClient reqResClient = new ReqResClient(port);
 
         // when
-        final Mono<String> mono = reqResClient.callBlocking(message)
+        final Mono<String> mono = reqResClient.call(message)
                                               .doOnTerminate(() -> {
                                                 reqResClient.dispose();
                                                 server.dispose();
