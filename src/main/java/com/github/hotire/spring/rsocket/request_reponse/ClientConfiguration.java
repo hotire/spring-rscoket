@@ -1,4 +1,4 @@
-package com.github.hotire.spring.rsocket.client;
+package com.github.hotire.spring.rsocket.request_reponse;
 
 import io.rsocket.RSocket;
 import io.rsocket.RSocketFactory;
