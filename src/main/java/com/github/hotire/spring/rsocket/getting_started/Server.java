@@ -25,7 +25,6 @@ public class Server {
     private class RSocketImpl extends AbstractRSocket {
         @Override
         public Mono<Payload> requestResponse(Payload payload) {
-            payload.release();
             return Mono.just(payload);
         }
     }

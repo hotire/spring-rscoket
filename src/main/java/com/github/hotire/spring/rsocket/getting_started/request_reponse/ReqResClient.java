@@ -5,10 +5,11 @@ import io.rsocket.RSocket;
 import io.rsocket.RSocketFactory;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import io.rsocket.util.DefaultPayload;
+import lombok.Getter;
 import reactor.core.publisher.Mono;
 
 public class ReqResClient {
-
+    @Getter
     private final RSocket socket;
 
     public ReqResClient(final int port) {
