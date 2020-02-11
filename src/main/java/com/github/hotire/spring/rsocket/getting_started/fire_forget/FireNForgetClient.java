@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-@Slf4j
+
 public class FireNForgetClient {
     private final RSocket socket;
     @Getter
