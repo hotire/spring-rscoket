@@ -18,3 +18,14 @@ RScoket은 4가지 interaction model을 제공한다.
 ### 3. Request/Stream
 
 ### 4. Channel
+
+## Request/Response 
+
+각 요청마다 단일 응답 
+- https://blog.naver.com/gngh0101/221788278405
+
+
+## Fire-and-Forget
+
+요청을 보내고 응답을 받지 않는다. 
+- https://blog.naver.com/gngh0101/221803996054
