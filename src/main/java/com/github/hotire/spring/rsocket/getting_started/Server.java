@@ -7,6 +7,7 @@ import io.rsocket.transport.netty.server.TcpServerTransport;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -45,6 +46,11 @@ public class Server {
             } catch (Exception x) {
                 return Mono.error(x);
             }
+        }
+        @Override
+        public Flux<Payload> requestStream(Payload payload) {
+            data.add(payload);
+            return Flux.fromIterable(data);
         }
     }
 }
