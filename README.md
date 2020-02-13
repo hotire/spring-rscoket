@@ -29,3 +29,8 @@ RScoket은 4가지 interaction model을 제공한다.
 
 요청을 보내고 응답을 받지 않는다. 
 - https://blog.naver.com/gngh0101/221803996054
+
+
+## Request/Stream
+
+하나의 요청에 여러 응답을 받는다. 
