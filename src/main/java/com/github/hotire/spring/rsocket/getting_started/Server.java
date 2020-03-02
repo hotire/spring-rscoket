@@ -1,6 +1,6 @@
 package com.github.hotire.spring.rsocket.getting_started;
 
-import com.github.hotire.spring.rsocket.getting_started.channel.RSocketController;
+import com.github.hotire.spring.rsocket.getting_started.channel.RSocketServerController;
 import io.rsocket.AbstractRSocket;
 import io.rsocket.Payload;
 import io.rsocket.RSocketFactory;
@@ -22,8 +22,8 @@ public class Server {
     private final Disposable server;
     @Getter
     private final List<Payload> data = new ArrayList<>();
-
-    private final RSocketController rSocketController;
+    @Getter
+    private final RSocketServerController rSocketServerController;
 
 
     public Server(final int port) {
@@ -32,8 +32,8 @@ public class Server {
                                     .transport(TcpServerTransport.create("localhost", port))
                                     .start()
                                     .subscribe();
-        rSocketController = new RSocketController("Server");
-        rSocketController.setExecutorService(Executors.newFixedThreadPool(3));
+        rSocketServerController = new RSocketServerController("Server");
+        rSocketServerController.setExecutorService(Executors.newFixedThreadPool(3));
     }
 
     public void dispose() {
@@ -63,8 +63,8 @@ public class Server {
         @SuppressWarnings("CallingSubscribeInNonBlockingScope")
         @Override
         public Flux<Payload> requestChannel(Publisher<Payload> payloads) {
-            Flux.from(payloads).subscribe(rSocketController::process);
-            return Flux.from(rSocketController);
+            Flux.from(payloads).subscribe(rSocketServerController::process);
+            return Flux.from(rSocketServerController);
         }
     }
 }
