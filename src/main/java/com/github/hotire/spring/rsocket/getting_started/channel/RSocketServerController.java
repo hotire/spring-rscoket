@@ -21,8 +21,18 @@ import java.util.function.Consumer;
 public class RSocketServerController implements Publisher<Payload> {
     private final String name;
     @Getter
-    private final AtomicInteger count = new AtomicInteger(10);
-    private final Map<String, Consumer<String>> processMap = Map.of("exit", s -> count.set(0));
+    private final AtomicInteger count;
+    private final Map<String, Consumer<RSocketServerController>> processMap;
+
+    public RSocketServerController(final String name, int count) {
+        this(name, count, Map.of("exit", server -> server.getCount().set(0)));
+    }
+
+    public RSocketServerController(final String name, int count, Map<String, Consumer<RSocketServerController>> processMap) {
+        this.name = name;
+        this.count = new AtomicInteger(count);
+        this.processMap = processMap;
+    }
 
     @Setter
     private ExecutorService executorService;
@@ -59,6 +69,6 @@ public class RSocketServerController implements Publisher<Payload> {
     public void process(final Payload payload) {
         final String data = payload.getDataUtf8();
         log.info(name + ", data :{}", data);
-        Optional.ofNullable(processMap.get(data)).ifPresent(consumer -> consumer.accept(data));
+        Optional.ofNullable(processMap.get(data)).ifPresent(consumer -> consumer.accept(this));
     }
 }
