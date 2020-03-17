@@ -46,7 +46,7 @@ public class RSocketClientController implements Publisher<Payload> {
 
     public void process(final Payload payload) {
         final String data = payload.getDataUtf8();
-        log.info("data : {]", data);
+        log.info("data : {}", data);
         Optional.ofNullable(handlerMap.get(data)).ifPresent(handler -> handler.accept(data,this));
     }
 
