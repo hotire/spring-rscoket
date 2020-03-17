@@ -49,7 +49,15 @@ public class RSocketServerController implements Publisher<Payload> {
     }
 
     protected void send() {
-        final Runnable runnable = () -> {
+        final Runnable runnable = getRunnable();
+
+        getExecutorService().ifPresentOrElse(es -> {
+            es.execute(runnable);
+        }, runnable);
+    }
+
+    protected Runnable getRunnable() {
+        return () -> {
             while (true) {
                 if (count.get() == 0) {
                     subscriber.onNext(DefaultPayload.create("exit"));
@@ -60,10 +68,6 @@ public class RSocketServerController implements Publisher<Payload> {
                 try { Thread.sleep(1000); } catch (InterruptedException ignore) { }
             }
         };
-
-        getExecutorService().ifPresentOrElse(es -> {
-            es.execute(runnable);
-        }, runnable);
     }
 
     public void process(final Payload payload) {
