@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,10 +22,13 @@ public class RSocketClientController implements Publisher<Payload> {
     private Subscriber<? super Payload> subscriber;
 
     public RSocketClientController(final List<Payload> messages) {
+        this(messages, Map.of("exit", (data, rSocketClientController)-> rSocketClientController.active.set(false));
+    }
+
+    public RSocketClientController(final List<Payload> messages, final Map<String, BiConsumer<String, RSocketClientController>> handlerMap) {
         this.messages = messages;
         this.active = new AtomicBoolean(true);
-        this.handlerMap = new HashMap<>();
-        this.handlerMap.put("exit", (data, rSocketClientController)-> rSocketClientController.active.set(false));
+        this.handlerMap = handlerMap;
     }
 
     @Override
