@@ -32,7 +32,7 @@ public class Server {
                                     .transport(TcpServerTransport.create("localhost", port))
                                     .start()
                                     .subscribe();
-        rSocketServerController = new RSocketServerController("Server");
+        rSocketServerController = new RSocketServerController("Server", 10);
         rSocketServerController.setExecutorService(Executors.newFixedThreadPool(3));
     }
 
