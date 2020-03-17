@@ -50,10 +50,7 @@ public class RSocketServerController implements Publisher<Payload> {
 
     protected void send() {
         final Runnable runnable = getRunnable();
-
-        getExecutorService().ifPresentOrElse(es -> {
-            es.execute(runnable);
-        }, runnable);
+        getExecutorService().ifPresentOrElse(es -> es.execute(runnable), runnable);
     }
 
     protected Runnable getRunnable() {
