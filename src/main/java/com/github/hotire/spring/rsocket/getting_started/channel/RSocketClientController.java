@@ -22,7 +22,7 @@ public class RSocketClientController implements Publisher<Payload> {
     private Subscriber<? super Payload> subscriber;
 
     public RSocketClientController(final List<Payload> messages) {
-        this(messages, Map.of("exit", (data, rSocketClientController)-> rSocketClientController.active.set(false));
+        this(messages, Map.of("exit", (data, rSocketClientController)-> rSocketClientController.active.set(false)));
     }
 
     public RSocketClientController(final List<Payload> messages, final Map<String, BiConsumer<String, RSocketClientController>> handlerMap) {
