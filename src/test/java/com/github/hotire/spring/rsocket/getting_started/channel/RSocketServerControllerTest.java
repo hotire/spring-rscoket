@@ -67,4 +67,23 @@ class RSocketServerControllerTest {
         // then
         verify(runnable, times(1)).run();
     }
+
+    @Test
+    void getRunnable() {
+        // given
+        final Subscriber<Payload> subscriber = mock(Subscriber.class);
+        final RSocketServerController rSocketServerController = new RSocketServerController("", 1) {
+            @Override
+            public Subscriber<? super Payload> getSubscriber() {
+                return subscriber;
+            };
+        };
+
+        // when
+        rSocketServerController.getRunnable().run();
+
+        // then
+        verify(subscriber, times(2)).onNext(any());
+        verify(subscriber, times(1)).onComplete();
+    }
 }
