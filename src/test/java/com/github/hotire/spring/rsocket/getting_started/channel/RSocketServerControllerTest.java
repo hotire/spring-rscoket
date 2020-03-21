@@ -33,6 +33,25 @@ class RSocketServerControllerTest {
     }
 
     @Test
+    void subscribe_error() {
+        // given
+        final Subscriber<? super Payload> subscriber = mock(Subscriber.class);
+        final RSocketServerController rSocketServerController = new RSocketServerController("", 0) {
+            @Override
+            protected Runnable getRunnable() {
+                return () -> {throw new RuntimeException();};
+            }
+        };
+
+        // when
+        rSocketServerController.subscribe(subscriber);
+
+        // then
+        verify(subscriber, times(1)).onError(any());
+    }
+
+
+    @Test
     void send() {
         // given
         final Runnable runnable = mock(Runnable.class);
