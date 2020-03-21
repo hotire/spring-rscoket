@@ -45,7 +45,11 @@ public class RSocketServerController implements Publisher<Payload> {
     @Override
     public void subscribe(final Subscriber<? super Payload> subscriber) {
         this.subscriber = subscriber;
-        send();
+        try {
+            send();
+        } catch (Exception e) {
+            this.subscriber.onError(e);
+        }
     }
 
     protected void send() {
