@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.reactivestreams.Subscriber;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -100,4 +101,18 @@ class RSocketServerControllerTest {
         // then
         assertThat(result).isEqualTo(0);
     }
+
+    @Test
+    void getCount() {
+        // given
+        final int count = 0;
+        final RSocketServerController rSocketServerController = new RSocketServerController("", count);
+
+        // when
+        final AtomicInteger result = rSocketServerController.getCount();
+
+        // then
+        assertThat(result.get()).isEqualTo(count);
+    }
+
 }
