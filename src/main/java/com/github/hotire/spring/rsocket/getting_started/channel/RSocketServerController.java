@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,13 +22,13 @@ public class RSocketServerController implements Publisher<Payload> {
     private final String name;
     @Getter
     private final AtomicInteger count;
-    private final Map<String, BiConsumer<RSocketServerController, Payload>> processMap;
+    private final Map<String, Consumer<RSocketServerController>> processMap;
 
     public RSocketServerController(final String name, int count) {
-        this(name, count, Map.of("exit", (server, data) -> server.getCount().set(0)));
+        this(name, count, Map.of("exit", server -> server.getCount().set(0)));
     }
 
-    public RSocketServerController(final String name, int count, Map<String, BiConsumer<RSocketServerController, Payload>> processMap) {
+    public RSocketServerController(final String name, int count, Map<String, Consumer<RSocketServerController>> processMap) {
         this.name = name;
         this.count = new AtomicInteger(count);
         this.processMap = processMap;
@@ -75,6 +75,6 @@ public class RSocketServerController implements Publisher<Payload> {
     public void process(final Payload payload) {
         final String data = payload.getDataUtf8();
         log.info(name + ", data :{}", data);
-        Optional.ofNullable(processMap.get(data)).ifPresent(consumer -> consumer.accept(this, payload));
+        Optional.ofNullable(processMap.get(data)).ifPresent(consumer -> consumer.accept(this));
     }
 }
