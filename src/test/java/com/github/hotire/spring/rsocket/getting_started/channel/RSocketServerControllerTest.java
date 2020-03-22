@@ -86,4 +86,18 @@ class RSocketServerControllerTest {
         verify(subscriber, times(2)).onNext(any());
         verify(subscriber, times(1)).onComplete();
     }
+
+    @Test
+    void process() {
+        final Payload payload = mock(Payload.class);
+        final RSocketServerController rSocketServerController = new RSocketServerController("", 1);
+
+        // when
+        when(payload.getDataUtf8()).thenReturn("exit");
+        rSocketServerController.process(payload);
+        final int result = rSocketServerController.getCount().get();
+
+        // then
+        assertThat(result).isEqualTo(0);
+    }
 }
