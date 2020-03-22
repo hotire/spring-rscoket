@@ -9,6 +9,8 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.hotire.spring.rsocket.getting_started.channel.ChanelConstants.LOCAL;
+
 public class ChannelClient {
 
     private final RSocket socket;
@@ -17,7 +19,7 @@ public class ChannelClient {
 
     public ChannelClient(final int port) {
         this.socket = RSocketFactory.connect()
-                                    .transport(TcpClientTransport.create("localhost", port))
+                                    .transport(TcpClientTransport.create(LOCAL, port))
                                     .start()
                                     .block();
         this.clientController = new RSocketClientController(new ArrayList<>());
