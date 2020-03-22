@@ -16,6 +16,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+import static com.github.hotire.spring.rsocket.getting_started.channel.ChanelConstants.EXIT;
+
 @Slf4j
 @RequiredArgsConstructor
 public class RSocketServerController implements Publisher<Payload> {
@@ -25,7 +27,7 @@ public class RSocketServerController implements Publisher<Payload> {
     private final Map<String, Consumer<RSocketServerController>> processMap;
 
     public RSocketServerController(final String name, int count) {
-        this(name, count, Map.of("exit", server -> server.getCount().set(0)));
+        this(name, count, Map.of(EXIT, server -> server.getCount().set(0)));
     }
 
     public RSocketServerController(final String name, int count, Map<String, Consumer<RSocketServerController>> processMap) {
@@ -62,7 +64,7 @@ public class RSocketServerController implements Publisher<Payload> {
         return () -> {
             while (true) {
                 if (getCount().get() == 0) {
-                    getSubscriber().onNext(DefaultPayload.create("exit"));
+                    getSubscriber().onNext(DefaultPayload.create(EXIT));
                     getSubscriber().onComplete();
                     return;
                 }

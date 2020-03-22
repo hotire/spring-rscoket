@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
+import static com.github.hotire.spring.rsocket.getting_started.channel.ChanelConstants.EXIT;
+
 @Slf4j
 @RequiredArgsConstructor
 public class RSocketClientController implements Publisher<Payload> {
@@ -22,7 +24,7 @@ public class RSocketClientController implements Publisher<Payload> {
     private Subscriber<? super Payload> subscriber;
 
     public RSocketClientController(final List<Payload> messages) {
-        this(messages, Map.of("exit", (data, rSocketClientController)-> rSocketClientController.active.set(false)));
+        this(messages, Map.of(EXIT, (data, rSocketClientController)-> rSocketClientController.active.set(false)));
     }
 
     public RSocketClientController(final List<Payload> messages, final Map<String, BiConsumer<String, RSocketClientController>> handlerMap) {
