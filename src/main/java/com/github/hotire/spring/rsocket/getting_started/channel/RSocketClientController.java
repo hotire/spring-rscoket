@@ -1,7 +1,6 @@
 package com.github.hotire.spring.rsocket.getting_started.channel;
 
 import io.rsocket.Payload;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -15,7 +14,6 @@ import java.util.function.BiConsumer;
 import static com.github.hotire.spring.rsocket.getting_started.channel.ChanelConstants.EXIT;
 
 @Slf4j
-@RequiredArgsConstructor
 public class RSocketClientController implements Publisher<Payload> {
 
     private final AtomicBoolean active;

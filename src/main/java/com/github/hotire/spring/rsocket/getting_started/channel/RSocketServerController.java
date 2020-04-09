@@ -4,7 +4,6 @@ package com.github.hotire.spring.rsocket.getting_started.channel;
 import io.rsocket.Payload;
 import io.rsocket.util.DefaultPayload;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -19,7 +18,6 @@ import java.util.function.Consumer;
 import static com.github.hotire.spring.rsocket.getting_started.channel.ChanelConstants.EXIT;
 
 @Slf4j
-@RequiredArgsConstructor
 public class RSocketServerController implements Publisher<Payload> {
     private final String name;
     @Getter
