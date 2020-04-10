@@ -36,3 +36,10 @@ RScoket은 4가지 interaction model을 제공한다.
 하나의 요청에 여러 응답을 받는다. 
 
 - https://blog.naver.com/gngh0101/221811712190
+
+
+## Channel 
+
+클라이언트와 서버가 양방향 통신하는 모델이다.  데이터가 양방향으로 비동기로 동작한다.
+
+- https://blog.naver.com/gngh0101/221900143268
